@@ -1,0 +1,12 @@
+- name: Deploy authenticator
+  hosts: authenticator
+  become: yes
+  become_user: root
+  vars_files: 
+    - ../../inventories/main/host_vars/authenticator.yml
+  roles:
+    - ../../roles/system_update
+    - ../../roles/enable_static_ip
+    - ../../roles/upload_files
+    - ../../roles/install_pip3_packages
+    - ../../roles/run_docker_compose
