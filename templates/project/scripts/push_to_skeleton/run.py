@@ -80,12 +80,13 @@ else:
   with open(SETTINGS_FILE.resolve()) as settings_file:
     ssh_key = yaml.full_load(settings_file)["ssh_key"]
 
-
+# Set the correct GIT skeleton URL
+# Set correct master branch name
 if not TEMP_REPO_PATH.exists():
   repo = Repo(search_parent_directories = True).clone_from(
-      "git@bitbucket.org:zenitech/infra-ansible.git",
+      "git@github.com:automateITpro/ansible_skeleton.git",
       TEMP_REPO_PATH,
-      branch = "master",
+      branch = "main",
       depth = 1,
       env = {
         "GIT_SSH_COMMAND": "ssh -i %s" % (ssh_key)
@@ -98,7 +99,8 @@ branch_name = re.sub(r'[^a-z0-9]', '-', '%s_%s' % (repo.config_reader().get_valu
 
 repo.head.reset(index = True, working_tree = True)
 repo.git.clean('-xdf')
-repo.heads.master.checkout()
+# Set correct master branch name
+repo.heads.main.checkout()
 repo.remotes.origin.pull(env = { "GIT_SSH_COMMAND": 'ssh -i %s' % (ssh_key) })
 
 try:
@@ -127,5 +129,6 @@ repo.git.push('-u', 'origin', branch_name, env = { "GIT_SSH_COMMAND": 'ssh -i %s
 
 repo.head.reset(index = True, working_tree = True)
 repo.git.clean('-xdf')
-repo.heads.master.checkout()
+# Set correct master branch name
+repo.heads.main.checkout()
 repo.remotes.origin.pull(env = { "GIT_SSH_COMMAND": 'ssh -i %s' % (ssh_key) })

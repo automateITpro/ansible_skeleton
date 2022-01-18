@@ -38,11 +38,13 @@ if Path.exists(PLAYBOOKS_PATH):
   shutil.rmtree(PLAYBOOKS_PATH)
 if Path.exists(ROLES_PATH):
   shutil.rmtree(ROLES_PATH)
+# Set the correct GIT skeleton URL
+# Set the correct master branch name
 if not TEMP_REPO_PATH.exists():
   repo = Repo(search_parent_directories = True).clone_from(
-      "git@bitbucket.org:zenitech/infra-ansible.git",
+      "git@github.com:automateITpro/ansible_skeleton.git",
       TEMP_REPO_PATH,
-      branch = "skeleton",
+      branch = "main",
       env = {
         "GIT_SSH_COMMAND": "ssh -i %s" % (ssh_key)
       }
@@ -51,7 +53,8 @@ else:
   repo = Repo(TEMP_REPO_PATH)
   repo.head.reset(index = True, working_tree = True)
   repo.git.clean("-xdf")
-  repo.heads.skeleton.checkout()
+  # Set the correct master branch name
+  repo.heads.main.checkout()
   repo.remotes.origin.pull(env = { "GIT_SSH_COMMAND": "ssh -i %s" % (ssh_key) })
 shutil.copytree(Path(TEMP_REPO_PATH, "playbooks"), PLAYBOOKS_PATH, symlinks = True)
 shutil.copytree(Path(TEMP_REPO_PATH, "roles"), ROLES_PATH, symlinks = True)

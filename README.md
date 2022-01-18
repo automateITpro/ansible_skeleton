@@ -22,6 +22,14 @@ Here we consolidate our Ansible roles and playbooks for a dynamic infrastructure
 1. Your project is created under **projects** directory. Copy it to your specific repository.
 1. Read the README.md file from your project base directory for further instructions.
 
+### Automate IT information ###
+
+To use this skeleton, you will need to change variables in our scripts according to your custom GIT configuration:
+In `templates/project/scripts` folder you will need to update `push_to_skeleton/run.py` and `sync_with skeleton/run.py`
+You will need to edit these files as comments in them tell.
+* Set the correct GIT skeleton URL (ssh url)
+* Set correct master branch names (in several places)
+
 ### Present roles ###
 
 ### How do I execute playbooks? ###
