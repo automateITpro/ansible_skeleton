@@ -1,0 +1,5 @@
+- name: Executing shell script in provided directory
+  shell: '{{ item.command }}'
+  args:
+    chdir: '{{ item.dir }}'
+  loop: '{{ commands }}'
